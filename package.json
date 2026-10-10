@@ -1,11 +1,11 @@
 {
   "name": "lvxing-research-studio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "绿行智研：政策资料、碳核算、行为情景与财务测算的本地研究工作台",
   "type": "commonjs",
   "license": "MIT",
   "engines": { "node": ">=22" },
   "repository": { "type": "git", "url": "https://github.com/lizexuan581-stack/lvxing-research-studio.git" },
-  "scripts": { "test": "node tests/core.test.cjs && node tests/release.test.cjs", "start": "node scripts/serve.cjs" }
+  "scripts": { "test": "node tests/core.test.cjs && node tests/research.test.cjs && node tests/release.test.cjs", "start": "node scripts/serve.cjs" }
 }

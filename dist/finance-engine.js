@@ -214,13 +214,19 @@
       price: source.price === undefined ? 2.16 : source.price,
       cost: source.cost === undefined ? null : source.cost,
       compensation: source.compensation === undefined ? 0 : source.compensation,
-      contractVerified: source.contractVerified === undefined ? false : source.contractVerified
+      contractVerified: source.contractVerified === undefined ? false : source.contractVerified,
+      fixedExpense: source.fixedExpense === undefined ? 0 : source.fixedExpense,
+      extraIncentive: source.extraIncentive === undefined ? 0 : source.extraIncentive
     };
 
     assertFiniteNumber(inputs.paidOrdersWan, "paidOrdersWan");
     assertFiniteNumber(inputs.freeOrdersWan, "freeOrdersWan");
     assertFiniteNumber(inputs.price, "price");
     assertFiniteNumber(inputs.compensation, "compensation");
+    ["fixedExpense", "extraIncentive"].forEach(function (key) {
+      assertFiniteNumber(inputs[key], key);
+      if (inputs[key] < 0 || inputs[key] > 1e10) throw new RangeError(key + "超出有效范围");
+    });
     if (inputs.cost !== null) {
       assertFiniteNumber(inputs.cost, "cost");
     }
@@ -271,7 +277,7 @@
     } else {
       var paidCostFen = productFen(inputs.paidOrdersWan, inputs.cost);
       var freeCostFen = productFen(inputs.freeOrdersWan, inputs.cost);
-      contributionWan = fenToWan2(deltaRevenueFen - paidCostFen - freeCostFen);
+      contributionWan = fenToWan2(deltaRevenueFen - paidCostFen - freeCostFen - wanToFen(inputs.fixedExpense, "fixedExpense") - wanToFen(inputs.extraIncentive, "extraIncentive"));
       warnings.push("增量经营贡献尚未扣除税费、资本开支和营运资金变化，不等于净利润或自由现金流。");
     }
 
@@ -286,7 +292,9 @@
         price: inputs.price,
         cost: inputs.cost,
         compensation: inputs.compensation,
-        contractVerified: inputs.contractVerified
+        contractVerified: inputs.contractVerified,
+        fixedExpense: inputs.fixedExpense,
+        extraIncentive: inputs.extraIncentive
       }
     };
   }
