@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict');
+const C=require('../dist/core.js');
+const results=C.tests();for(const result of results)assert.equal(result.passed,true,result.name+': '+result.error);
+const base={baseline:2934.75,paidOrdersWan:30,freeOrdersWan:0,price:2.16,cost:1,compensation:0,contractVerified:false,capex:0,workingCapital:0,otherCash:0};
+assert.throws(()=>C.finance({...base,price:-1}));assert.throws(()=>C.finance({...base,baseline:1,paidOrdersWan:-30}));
+assert.equal(C.finance({...base,paidOrdersWan:0,freeOrdersWan:30,compensation:12,contractVerified:true,contractRef:'假设有效合同'}).contributionWan,-18);
+assert.equal(C.finance({...base,paidOrdersWan:-30}).contributionWan,null);
+assert.equal(C.finance({...base,price:2.17,paidOrdersWan:0.01}).deltaRevenueWan,0.02);
+assert.throws(()=>C.carbon([{name:'A',trips:.5,km:1,base:.12,green:.02}]));
+assert.throws(()=>C.behavior({initial:2}));
+assert.ok(C.safeCSV([['=HYPERLINK("x")']]).includes("'="));
+assert.equal(C.parseCSV('a,b\r\n"x\nq","a""b"')[1][1],'a"b');
+assert.equal(C.search([{id:'x',title:'x',pages:[{page:1,text:'hello'}]}],'missing').length,0);
+console.log(JSON.stringify({suite:'core-v1',embedded:results.length,additional:10,passed:results.length+10,results},null,2));

@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.openai/
+__pycache__/
+*.log
+*.zip
+*.tar.gz
+.DS_Store
+Thumbs.db
+coverage/
+private/
+backups/
