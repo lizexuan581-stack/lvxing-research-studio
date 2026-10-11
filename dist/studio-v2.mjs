@@ -93,7 +93,7 @@ export function createResearchStudio(api) {
     const p=project();$('.orbit-visual')?.replaceWith(document.createRange().createContextualFragment(cityScene()));
     $('.hero>div:first-child>p').textContent='整理政策证据，推演出行情景，算清经营影响。让每一步研究，都能回到依据。';
     $('.hero-note').textContent=[p.profile.city,p.profile.company,p.details.segment||'待补业务范围'].join(' · ');
-    $('.hero').insertAdjacentHTML('afterend',`<div class="research-ribbon"><span><i class="signal-dot"></i> RESEARCH STUDIO <b>1.1</b></span><p>资料 → 政策 → 环境与行为 → 经营影响 → 研究交付</p>${btn(getState().motionPaused?'开启动态':'暂停动态','motion-toggle','outline small')}</div>`);
+    $('.hero').insertAdjacentHTML('afterend',`<div class="research-ribbon"><span><i class="signal-dot"></i> RESEARCH STUDIO <b>1.2</b></span><p>资料 → 政策 → 环境与行为 → 经营影响 → 研究交付</p>${btn(getState().motionPaused?'开启动态':'暂停动态','motion-toggle','outline small')}</div>`);
     add(panel('下一步，把问题问得更具体','按研究底稿的完成情况，直接进入需要补充的环节。',`<div class="task-cards">${[
       ['policy','01','明确研究范围',p.details.period?`${p.details.period} · ${p.details.segment||'业务分部待填'}`:'补齐业务分部、研究期间与政策六要素。','mint'],
       ['finance','02','比较经营变化',p.history?`已保存${p.history.inputs.period0}—${p.history.inputs.period1}历史复算`:'核对历史同比、成本结构，再比较新的情景。','lavender'],
@@ -137,7 +137,7 @@ export function createResearchStudio(api) {
     add(trackingView());
     $('.report-side .actions')?.insertAdjacentHTML('beforeend',btn('导出 manifest','export-manifest','outline small')+btn('导出运行日志','export-runlog','outline small'));
   }
-  function proofView(){add(panel('交付内容与运行边界','每一项都对应真实入口或可下载的研究记录。',`<div class="deliverables">${[['docs','来源与事实表','文字型PDF、本地检索、信息分类'],['policy','政策事件卡','研究范围、六要素、影响路径'],['finance','财务与历史底稿','同比、毛利、量价、情景对比'],['report','研究备忘录','跟踪条件、反向证据、版本检查']].map(([r,t,d])=>`<button data-route="${r}"><b>${t} ↗</b><span>${d}</span></button>`).join('')}</div><div class="actions v2-space">${btn('下载 manifest.json','export-manifest','outline')}${btn('下载 run.jsonl','export-runlog','outline')}</div><p class="hint v2-space">manifest保存本次输入与模块能力；run.jsonl按发生顺序记录实际动作。变更标记用于核对版本，不是密码学签名。大语言模型、OCR、多人云端协作仍未接入。</p>`));}
+  function proofView(){add(panel('研究交付清单','从资料到报告，所有输出集中管理。',`<div class="deliverables">${[['docs','来源与事实表','文字型PDF、本地检索、信息分类'],['policy','政策事件卡','研究范围、六要素、影响路径'],['finance','财务与历史底稿','同比、毛利、量价、情景对比'],['report','研究备忘录','跟踪条件、反向证据、版本检查']].map(([r,t,d])=>`<button data-route="${r}"><b>${t} ↗</b><span>${d}</span></button>`).join('')}</div><div class="actions v2-space">${btn('下载 manifest.json','export-manifest','outline')}${btn('下载 run.jsonl','export-runlog','outline')}</div><p class="hint v2-space">manifest保存本次输入与模块信息；run.jsonl按发生顺序记录研究动作，便于定位参数变更与输出版本。</p>`));}
   function mount(){
     const p=R.normalize(project());document.body.classList.toggle('motion-paused',!!getState().motionPaused);
     ({overview:overviewView,docs:docsView,policy:policyView,carbon:carbonView,behavior:behaviorView,finance:financeView,report:reportView,proof:proofView}[route()]||(()=>{}))();

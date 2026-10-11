@@ -8,7 +8,7 @@ const app=fs.readFileSync(path.join(root,'dist/app.js'),'utf8');
 assert.ok(!/copyright-1|patent_notice_|annex-092|travel-home/.test(app),'private assets referenced');
 for(const file of ['LICENSE','THIRD_PARTY_NOTICES.md','dist/vendor/LICENSE','dist/vendor/pdf.mjs','dist/vendor/pdf.worker.mjs']) assert.ok(fs.existsSync(path.join(root,file)),file);
 assert.ok(!fs.existsSync(path.join(root,'.openai')),'private deployment metadata');
-for(const file of ['app.js','core.js','data.js','finance-engine.js','research.js','studio-v2.mjs']) {
+for(const file of ['app.js','core.js','data.js','finance-engine.js','research.js','studio-v2.mjs','portal.mjs']) {
   const r=spawnSync(process.execPath,['--check',path.join(root,'dist',file)],{encoding:'utf8'});
   assert.equal(r.status,0,r.stderr);
 }
