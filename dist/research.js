@@ -1,6 +1,6 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./core.js'));else root.StudioResearch=factory(root.StudioCore);})(globalThis,function(C){
   'use strict';
-  const version='1.1.0';
+  const version='1.3.0';
   const kinds=['披露事实','政策目标','代理参数','情景假设'];
   const statuses={pending:'待补资料',watch:'持续观察',met:'条件满足',failed:'条件未满足'};
   function normalize(p){
@@ -88,7 +88,7 @@
     out.push('','## 十二、跟踪条件与反向证据',...p.tracking.map(t=>`- ${t.label}：${t.condition}；状态：${statuses[t.status]}；观察：${t.observation||'待补充'}；来源：${p.docs.find(d=>d.id===t.sourceId)?.title||'未关联'}。`),'反向证据及可推翻结论的条件：'+(p.counterEvidence||'待研究者补充。'));
     return out.join('\n');
   }
-  function manifest(p){return {format:'lvxing-run-manifest',schemaVersion:2,appVersion:version,projectId:p.id,exportedAt:new Date().toISOString(),inputFingerprint:signature(p),fingerprintNote:'FNV变更标记，非密码学签名',capabilities:{pdfText:true,deterministicModels:true,externalLLM:false,ocr:false,cloudSync:false},inputs:reportInputs(p),latestReport:p.reports[0]?{id:p.reports[0].id,createdAt:p.reports[0].createdAt,inputHash:p.reports[0].inputHash}:null,runCount:p.runs.length};}
+  function manifest(p){return {format:'lvxing-run-manifest',schemaVersion:2,appVersion:version,projectId:p.id,exportedAt:new Date().toISOString(),inputFingerprint:signature(p),fingerprintNote:'FNV变更标记，非密码学签名',capabilities:{pdfText:true,deterministicModels:true,externalLLM:!!p.agentRuns?.some(r=>r.manifest?.status==='completed'&&!r.replay),agentIntegration:'DeepSeek via paired local gateway',ocr:false,cloudSync:false},inputs:reportInputs(p),latestReport:p.reports[0]?{id:p.reports[0].id,createdAt:p.reports[0].createdAt,inputHash:p.reports[0].inputHash}:null,runCount:p.runs.length};}
   function tests(){
     const results=[],check=(name,fn)=>{try{if(!fn())throw Error('结果不符');results.push({name,passed:true});}catch(e){results.push({name,passed:false,error:e.message});}},reject=fn=>{try{fn();return false;}catch{return true;}};
     const h={scope:'全国共享出行业务',period0:'2024年',period1:'2025年',revenue0:10752.02,revenue1:8232.51,cost0:null,cost1:11630.34,orders0:6719.3,orders1:3806.05,price0:1.6,price1:2.16,parentRevenue:null};

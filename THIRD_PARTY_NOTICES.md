@@ -1,5 +1,18 @@
 # 第三方组件和资料
 
+## DeepSeek API
+
+- 服务方：DeepSeek；本次验证请求模型为 `deepseek-flash`，每次响应的实际模型标识写入 manifest。
+- 官方接口与文档：https://api.deepseek.com / https://api-docs.deepseek.com/
+- 用途：任务组织、白名单工具调用、基于引用与工具结果的研究表达。
+- 调用模块：`server/provider.cjs`；系统指令：`server/prompts.cjs`。
+- 模型权重不随源码分发，模型服务按服务方条款提供，不受本仓库 MIT 许可再授权。
+- 用户主动允许后，任务、事实字段及使用到的资料片段发往该服务；API密钥仅驻留本机服务内存。
+
+## Node.js
+
+源码需要 Node.js 22 或以上版本。桌面技术交付包附带 Windows x64 Node.js 运行时及原版 LICENSE，便于解压运行；GitHub 仓库不包含运行时二进制。项目：https://nodejs.org/ 。
+
 ## PDF.js 5.6.205
 
 - 项目：https://github.com/mozilla/pdf.js

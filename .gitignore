@@ -11,4 +11,6 @@ __pycache__/
 Thumbs.db
 coverage/
 private/
+runtime/
+*.agent-bundle.json
 backups/
